@@ -64,7 +64,7 @@ var mouse = {
  */
 var bullet = {
 	position: function( x, y ) {
-		document.getElementById('mouse-position').innerHTML = mouse.follow(x,y);
+		// document.getElementById('mouse-position').innerHTML = mouse.follow(x,y);
 		bullet.move(y);
 	},
 	move: function(y) {
