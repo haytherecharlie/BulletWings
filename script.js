@@ -64,11 +64,11 @@ var mouse = {
  */
 var bullet = {
 	position: function( x, y ) {
-		// document.getElementById('mouse-position').innerHTML = mouse.follow(x,y);
+		document.getElementById('testing-box').innerHTML = mouse.follow(x,y);
 		bullet.move(y);
 	},
 	move: function(y) {
-		document.getElementById('mouse-position').style.top = (y - 87) + 'px';
+		document.getElementById('mouse-position').style.top = y + 'px';
 	}
 } // End of bullet.
 
