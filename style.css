@@ -1,0 +1,64 @@
+body {
+	background-color: lightblue;
+	font-family: helvetica;
+}
+
+#mouse-position {
+	padding: 20px;
+	border: 1px solid #000;
+	background-color: #333;
+	position: absolute;
+	top: 0px;
+	border-radius: 0px 100px 100px 0px;
+	color: #fff;
+}
+
+#slider {
+	height: 100vh;
+	width: 100px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+#top {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100px;
+	height: 40vh;
+	background-color: green;
+}
+
+#bottom {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100px;
+	height: 40vh;
+	background-color: green;
+}
+
+#message-center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translatex(-50%);
+	transform: translateX(-50%);
+	color: #000;
+	text-shadow: 2px 2px 2px #fff;
+	font-size: 3em;
+	font-weight: bold;
+	visibility: hidden;
+	text-transform: uppercase;
+}
+
+#score-board {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	background-color: #fff;
+	padding: 10px;
+	border: 1px solid #000;
+	box-shadow: 3px 3px 3px #333;
+}
