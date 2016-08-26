@@ -122,6 +122,17 @@ var slider = {
 var trump = {
 	show: function() {
 		document.getElementById('trump').style.visibility = 'visible';
+		this.playAgain();
+	},
+	playAgain: function() {
+		window.setTimeout( function() {
+			document.getElementById('play-again').style.visibility = 'visible';
+		}, 500, trump.reload() );
+	},
+	reload: function() {
+		document.getElementById('play-again').addEventListener('click', function() {
+			location.reload();
+		});
 	}
 }
 

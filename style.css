@@ -105,3 +105,19 @@ body {
 	z-index: 100;
 	visibility: hidden;
 }
+
+#play-again {
+	background-color: transparent;
+	font-size: 3em;
+	font-weight: bold;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	visibility: hidden;
+}
+	#play-again:focus {
+  		outline: none;
+	}
