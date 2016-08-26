@@ -202,7 +202,7 @@ var collision = {
 
 background = {
 	slide: function(pos) {
-		if(gameOver === false){
+		if(gameOver === false && pos < 100){
 			window.setTimeout( function() {
 				document.getElementsByTagName("BODY")[0].style.backgroundPosition = pos + '% 0%';
 				background.slide(pos + 0.05);
