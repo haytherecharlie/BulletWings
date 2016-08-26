@@ -1,13 +1,14 @@
 body {
-    background: url(sky.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-  	background-size: cover;
+    background: url(sky.jpg); 
+    -webkit-background-size: 150vw 100vh;
+    -moz-background-size: 150vw 100vh;
+    -o-background-size: 150vw 100vh;
+  	background-size: 150vw 100vh;
+  	background-position: 0% 0%;
 	font-family: helvetica;
 }
 
-#mouse-position {
+#bullet {
 	/*border: 1px solid #000;*/
 	background-image: url('bullet.png');
 	height: 93px;
@@ -20,6 +21,7 @@ body {
 	border-radius: 0px 100px 100px 0px;
 	box-shadow: 4px 0px 10px #fff;
 	color: #fff;
+	z-index: 10;
 }
 
 #slider {
@@ -28,6 +30,7 @@ body {
 	position: absolute;
 	top: 0px;
 	right: 0px;
+	z-index: 11;
 }
 
 #top {
@@ -35,7 +38,7 @@ body {
 	top: 0px;
 	left: 0px;
 	width: 100px;
-	height: 40vh;
+	height: 30vh;
 	background: rgba(51,51,51,1);
 	background: -moz-linear-gradient(left, rgba(51,51,51,1) 0%, rgba(43,43,43,1) 19%, rgba(28,28,28,1) 48%, rgba(51,51,51,1) 100%);
 	background: -webkit-gradient(left top, right top, color-stop(0%, rgba(51,51,51,1)), color-stop(19%, rgba(43,43,43,1)), color-stop(48%, rgba(28,28,28,1)), color-stop(100%, rgba(51,51,51,1)));
@@ -44,6 +47,7 @@ body {
 	background: -ms-linear-gradient(left, rgba(51,51,51,1) 0%, rgba(43,43,43,1) 19%, rgba(28,28,28,1) 48%, rgba(51,51,51,1) 100%);
 	background: linear-gradient(to right, rgba(51,51,51,1) 0%, rgba(43,43,43,1) 19%, rgba(28,28,28,1) 48%, rgba(51,51,51,1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#333333', GradientType=1 );
+	z-index: 11;
 }
 
 #bottom {
@@ -51,7 +55,7 @@ body {
 	bottom: 0px;
 	left: 0px;
 	width: 100px;
-	height: 40vh;
+	height: 30vh;
 	background: rgba(51,51,51,1);
 	background: -moz-linear-gradient(left, rgba(51,51,51,1) 0%, rgba(43,43,43,1) 19%, rgba(28,28,28,1) 48%, rgba(51,51,51,1) 100%);
 	background: -webkit-gradient(left top, right top, color-stop(0%, rgba(51,51,51,1)), color-stop(19%, rgba(43,43,43,1)), color-stop(48%, rgba(28,28,28,1)), color-stop(100%, rgba(51,51,51,1)));
@@ -60,6 +64,7 @@ body {
 	background: -ms-linear-gradient(left, rgba(51,51,51,1) 0%, rgba(43,43,43,1) 19%, rgba(28,28,28,1) 48%, rgba(51,51,51,1) 100%);
 	background: linear-gradient(to right, rgba(51,51,51,1) 0%, rgba(43,43,43,1) 19%, rgba(28,28,28,1) 48%, rgba(51,51,51,1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#333333', GradientType=1 );
+	z-index: 11;
 }
 
 #message-center {
@@ -74,6 +79,7 @@ body {
 	font-weight: bold;
 	visibility: hidden;
 	text-transform: uppercase;
+	z-index: 110;
 }
 
 #score-board {
@@ -84,13 +90,18 @@ body {
 	padding: 10px;
 	border: 1px solid #000;
 	box-shadow: 3px 3px 3px #333;
+	z-index: 12;
 }
 
-#testing-box {
+#trump {
+	height: 350px;
+	width: 400px;
+	background-image: url('trump.png');
 	position: absolute;
-	bottom: 20px;
-	left: 20px;
-	padding: 10px;
-	background-color: #fff;
+	top: 50%;
+	left: calc(50% - 200px);
+	transform: translateX(-50%);
+	transform: translateY(-50%);
 	z-index: 100;
+	visibility: hidden;
 }

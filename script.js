@@ -1,3 +1,4 @@
+var gameOver = false;
 /**
  * The screen object contains the functions to getHight() and getWidth()
  * of the window. 
@@ -50,56 +51,86 @@ var score = {
 }
 
 /**
- * The mouse object contains the methods to follow the mouse and to track it. 
+ * The gravity object handles all the flying and falling functionality of the game.
  */
-var mouse = {
-	follow: function( x, y ) {
-		return "X coords: " + x + ", Y coords: " + y;
-	}
-} // End of mouse. 
-
-/**
- * The bullet object displays the bullet on the page, writes the coordinates and 
- * moves
- */
-var bullet = {
-	position: function( x, y ) {
-		document.getElementById('testing-box').innerHTML = mouse.follow(x,y);
-		bullet.move(y);
+var gravity = {
+	fired: false,
+	listen: function() {
+		gravity.fall();
+		document.addEventListener('keydown', function(e) {
+			if(e.keyCode === 32 && gravity.fired === false) {
+				gravity.fired = true;
+				gravity.stop();
+				gravity.fly();
+			} 
+		});
+	}, 
+	fly: function() {
+		var top = document.getElementById('bullet').getBoundingClientRect().top
+		if(gravity.fired === true && top > 0) {
+			window.setTimeout( function() {
+				document.getElementById('bullet').style.top = (top - 5) + 'px';
+				gravity.fly();
+			}, 10);
+		}
 	},
-	move: function(y) {
-		document.getElementById('mouse-position').style.top = y + 'px';
+	stop: function() {
+		document.addEventListener('keyup', function(e) {
+			gravity.fired = false;
+			window.setTimeout( function() {
+				gravity.fall();
+			}, 100);
+		});
+	},
+	fall: function() {
+		var top = document.getElementById('bullet').getBoundingClientRect().top;
+		if(gravity.fired === false && top < (screen.getHeight() - 93) ) {
+			window.setTimeout( function() {
+				document.getElementById('bullet').style.top = (top + 5) + 'px';
+				gravity.fall();
+			}, 10);
+		}
 	}
-} // End of bullet.
+}
 
 /**
  * The slider object moves the sliding pipes on the page. 
  */
 var slider = {
 	move: function(obstacle, position, speed) {
-		var top = document.getElementById('top'),
-			bottom = document.getElementById('bottom'),
-			bullet = document.getElementById('mouse-position');
-		if(position < screen.getWidth() ) {
-			window.setTimeout( function() {
-				collision.checkTop(top, bullet, bottom);
-				obstacle.style.right = position + 'px';
-				slider.move(obstacle, position + 10, speed);
-			}, speed);
+		if(gameOver === false) {
+			var top = document.getElementById('top'),
+				bottom = document.getElementById('bottom'),
+				bullet = document.getElementById('bullet');
+			if(position < screen.getWidth() ) {
+				window.setTimeout( function() {
+					obstacle.style.right = position + 'px';
+					slider.move(obstacle, position + 10, speed);
+					collision.detect();
+				}, speed);
+			} else {
+				score.up();
+				path.setOpenSpace();
+				slider.move(obstacle, 0, speed);
+			}
 		} else {
-			score.up();
-			path.setOpenSpace();
-			slider.move(obstacle, 0, speed);
+			trump.show();
 		}
 	}
 } // End of slider.
+
+var trump = {
+	show: function() {
+		document.getElementById('trump').style.visibility = 'visible';
+	}
+}
 
 /**
  * The calculate object calculates hights for the objects on the page. 
  */
 var calculate = {
 	heights: function() {
-		return Math.floor(Math.random() * screen.getHeight() - 200);
+		return Math.floor(Math.random() * screen.getHeight() - 300);
 	}
 } // End of calculate.
 
@@ -110,9 +141,8 @@ var path = {
 	setOpenSpace: function() {
 		var top = document.getElementById('top');
 			bottom = document.getElementById('bottom');
-		console.log(calculate.heights());
 		top.style.height = calculate.heights() + 'px';
-		bottom.style.height = (screen.getHeight() - parseInt(top.style.height) - 200) + 'px';
+		bottom.style.height = (screen.getHeight() - parseInt(top.style.height) - 300) + 'px';
 	}
 } // End of path. 
 
@@ -120,23 +150,55 @@ var path = {
  * The collision object handles the collisions of objects. 
  */
 var collision = {
-	checkTop: function(a, b, c) {
-		var bulletWidth = b.getBoundingClientRect().right;
-			bulletHeight = b.getBoundingClientRect().top - 61;
-			bulletBottom = b.getBoundingClientRect().bottom;
-			topWidth = a.getBoundingClientRect().left;
-			topHeight = a.getBoundingClientRect().bottom;
-			bottomWidth = c.getBoundingClientRect().left;
-			bottomHeight = c.getBoundingClientRect().top;
-		if( topWidth <= bulletWidth && bulletHeight <= topHeight ) {
-			console.log('Game Over');
+	bulletBounds: function() {
+		var item = document.getElementById('bullet');
+		return {
+			right: item.getBoundingClientRect().right,
+			left: item.getBoundingClientRect().left,
+			top: item.getBoundingClientRect().top,
+			bottom: item.getBoundingClientRect().bottom
 		}
-		return false; 
 	},
-	checkBottom: function(a, b) {
-
+	topBounds: function() {
+		var item = document.getElementById('top');
+		return {
+			right: item.getBoundingClientRect().right,
+			left: item.getBoundingClientRect().left,
+			top: item.getBoundingClientRect().top,
+			bottom: item.getBoundingClientRect().bottom
+		}
+	},
+	bottomBounds: function() {
+		var item = document.getElementById('bottom');
+		return {
+			right: item.getBoundingClientRect().right,
+			left: item.getBoundingClientRect().left,
+			top: item.getBoundingClientRect().top,
+			bottom: item.getBoundingClientRect().bottom
+		}
+	},
+	detect: function() {
+		var top = collision.topBounds();
+			bottom = collision.bottomBounds();
+			bullet = collision.bulletBounds();
+		if(top.left < bullet.right && top.right > bullet.left ) {
+			if(bullet.top < top.bottom || bullet.bottom > bottom.top){
+				gameOver = true;
+			}
+		}
 	}
 } // End of collision. 
+
+background = {
+	slide: function(pos) {
+		if(gameOver === false){
+			window.setTimeout( function() {
+				document.getElementsByTagName("BODY")[0].style.backgroundPosition = pos + '% 0%';
+				background.slide(pos + 0.05);
+			}, 10);
+		}
+	}
+}
 
 /** 
  * When the DOM is loaded, run these functions. 
@@ -144,9 +206,8 @@ var collision = {
 document.addEventListener('DOMContentLoaded', function(){ 
 
 	slider.move(document.getElementById('slider'), 0, 10);
+	gravity.listen();
+	background.slide(0.01);
 
-	document.addEventListener('mousemove', function(e) {
-		bullet.position(e.screenX, e.screenY);
-	});
 
 }, false);
