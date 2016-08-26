@@ -1,4 +1,4 @@
-var gameOver = false;
+var gameOver = false; // Is the game over?
 /**
  * The screen object contains the functions to getHight() and getWidth()
  * of the window. 
@@ -91,7 +91,7 @@ var gravity = {
 			}, 10);
 		}
 	}
-}
+} // End of gravity
 
 /**
  * The slider object moves the sliding pipes on the page. 
@@ -119,6 +119,9 @@ var slider = {
 	}
 } // End of slider.
 
+/**
+ * The trump object handles all situations when the game is over. 
+ */
 var trump = {
 	show: function() {
 		document.getElementById('trump').style.visibility = 'visible';
@@ -134,7 +137,7 @@ var trump = {
 			location.reload();
 		});
 	}
-}
+} // End of trump.
 
 /**
  * The calculate object calculates hights for the objects on the page. 
@@ -200,6 +203,9 @@ var collision = {
 	}
 } // End of collision. 
 
+/**
+ * The background object handles the sliding background. 
+ */
 background = {
 	slide: function(pos) {
 		if(gameOver === false && pos < 100){
@@ -209,16 +215,13 @@ background = {
 			}, 10);
 		}
 	}
-}
+} // End of background. 
 
 /** 
  * When the DOM is loaded, run these functions. 
  */
 document.addEventListener('DOMContentLoaded', function(){ 
-
 	slider.move(document.getElementById('slider'), 0, 10);
 	gravity.listen();
 	background.slide(0.01);
-
-
 }, false);
